@@ -3,6 +3,7 @@ import numpy as np
 import cv2 as cv
 import torch
 import cvzone
+import math
 
 class ObjectTracking:
     def __init__(self, capture_index):
@@ -16,7 +17,7 @@ class ObjectTracking:
 
     def load_model(self):
        
-        model = YOLO("yolov8n.pt")  # load a pretrained YOLOv8n model
+        model = YOLO("modeln.pt")  # load a pretrained YOLOv8n model
         #model.fuse()
     
         return model
@@ -37,6 +38,8 @@ class ObjectTracking:
         cap.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
         cap.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
 
+        classes_name= ['Bike', 'Buildings', 'Car', 'Human', 'NoParking', 'Parking', 'Pole', 'Road', 'Vehicle', 'dustbin', 'grass', 'small-obstacles', 'trees']
+
         while True:
             ret,frame=cap.read()
 
@@ -52,13 +55,17 @@ class ObjectTracking:
 
                     w,h=x2-x1,y2-y1
 
-                    cvzone.cornerRect(frame,(x1,y1,w,h))
-                    print(type(track))
+                    conf=math.ceil((box.conf[0]*100))/100
+                    clss=int(box.cls[0])
+                    cvzone.putTextRect(frame,f'{classes_name[clss]}{conf}',(max(0,x1),max(35,y1)),scale=3,thickness=1)
+                    
+                    #print(type(track))
+
             
             
             cv.imshow("YOLOv8_Detection", frame)
  
-            if cv.waitKey(5) & 0xFF == :
+            if cv.waitKey(5) & 0xFF == 27:
                 
                 break
 

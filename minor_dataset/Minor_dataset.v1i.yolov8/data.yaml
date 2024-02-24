@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 13
+names: ['Bike', 'Buildings', 'Car', 'Human', 'NoParking', 'Parking', 'Pole', 'Road', 'Vehicle', 'dustbin', 'grass', 'small-obstacles', 'trees']
+
+roboflow:
+  workspace: datasets-tnnrm
+  project: minor_dataset
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/datasets-tnnrm/minor_dataset/dataset/1

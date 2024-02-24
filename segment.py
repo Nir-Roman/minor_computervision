@@ -15,7 +15,7 @@ class segmentation():
         
         self.model = self.seg_model_load()
 
-    def seg_model_load():
+    def seg_model_load(self):
         model=YOLO("yolov8n-seg.pt")
         
         return model
